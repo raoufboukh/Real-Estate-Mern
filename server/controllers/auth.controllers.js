@@ -29,6 +29,8 @@ export const signUp = async (req, res) => {
         _id: newUser._id,
         name: newUser.name,
         email: newUser.email,
+        role: newUser.role,
+        notification: newUser.notification,
       });
     } else {
       res.status(400).json({ message: "Invalid user data" });
@@ -53,6 +55,8 @@ export const signIn = async (req, res) => {
         _id: user._id,
         name: user.name,
         email: user.email,
+        role: newUser.role,
+        notification: newUser.notification,
       });
     } else {
       res.status(400).json({ message: "Invalid password" });
