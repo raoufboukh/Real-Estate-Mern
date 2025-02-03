@@ -7,8 +7,10 @@ import Hero from "@/components/Hero";
 import Context from "@/components/context";
 import Residencies from "@/components/Residencies";
 import Companies from "@/components/Companies";
-import Value from "@/components/value";
+import Value from "@/components/Value";
 import Contact from "@/components/Contact";
+import Start from "@/components/start";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   useEffect(() => {
@@ -31,6 +33,8 @@ export default function Home() {
       </Context>
       <Value />
       <Contact />
+      <Start />
+      <Footer />
     </>
   );
 }
