@@ -67,8 +67,8 @@ function Hero() {
               src="/assets/hero-image.png"
               alt="hero"
               className="w-full"
-              width={100}
-              height={100}
+              width={1000}
+              height={1000}
             />
           </div>
         </div>
