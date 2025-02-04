@@ -1,8 +1,8 @@
+// "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
-// import type { PayloadAction } from "@reduxjs/toolkit";
 
 export const checkAuth = createAsyncThunk(
   "auth/check",
@@ -38,6 +38,7 @@ export const register = createAsyncThunk(
   async (data: any, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post("/signUp", data);
+      console.log(response.data);
       toast.success("Register successful");
       return response.data;
     } catch (error) {
@@ -66,7 +67,6 @@ export const logout = createAsyncThunk(
 
 export interface User {
   _id: string;
-  name: string;
   email: string;
   notification: [string | number];
   role: string;
@@ -134,8 +134,5 @@ export const AuthSlice = createSlice({
       });
   },
 });
-
-// Action creators are generated for each case reducer function
-// export const { increment, decrement, incrementByAmount } = counterSlice.actions;
 
 export default AuthSlice.reducer;
