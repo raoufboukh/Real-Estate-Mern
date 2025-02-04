@@ -52,8 +52,8 @@ export const signIn = async (req, res) => {
       res.status(200).json({
         _id: user._id,
         email: user.email,
-        role: newUser.role,
-        notification: newUser.notification,
+        role: user.role,
+        notification: user.notification,
       });
     } else {
       res.status(400).json({ message: "Invalid password" });
@@ -76,6 +76,7 @@ export const signOut = (req, res) => {
 
 export const check = async (req, res) => {
   try {
+    // console.log(req.user);
     res.status(200).send(req.user);
   } catch (error) {
     res.status(500).json({ message: error.message });
