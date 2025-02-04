@@ -9,8 +9,9 @@ import Residencies from "@/components/Residencies";
 import Companies from "@/components/Companies";
 import Value from "@/components/Value";
 import Contact from "@/components/Contact";
-import Start from "@/components/start";
+import Start from "@/components/Start";
 import Footer from "@/components/Footer";
+import { Toaster } from "react-hot-toast";
 
 export default function Home() {
   useEffect(() => {
@@ -22,7 +23,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="">
+      <div>
         <Navbar />
         <div className="absolute size-[20rem] md:size-[26rem] bg-white rounded-full blur-3xl -top-9 -left-9 opacity-40 z-20 pointer-events-none" />
         <Hero />
@@ -35,6 +36,7 @@ export default function Home() {
       <Contact />
       <Start />
       <Footer />
+      <Toaster />
     </>
   );
 }
