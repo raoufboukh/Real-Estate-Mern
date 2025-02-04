@@ -5,10 +5,17 @@ import { useEffect, useState } from "react";
 import { RiMenu4Fill } from "react-icons/ri";
 import OutsideClickHandler from "react-outside-click-handler";
 import { links } from "./constants";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "./store/store";
+import { checkAuth } from "./store/AuthSlices";
+import Button from "./Button";
 
 function Navbar() {
   const [menu, setMenu] = useState(false);
   const [scr, setScr] = useState(0);
+  // const [second, setSecond] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const { user } = useSelector((state: RootState) => state.auth);
   useEffect(() => {
     const scrollHandler = () => {
       setScr(window.scrollY);
@@ -19,6 +26,10 @@ function Navbar() {
     };
   });
 
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
+
   return (
     <header
       className={`sticky py-3 top-0 ${
@@ -26,13 +37,15 @@ function Navbar() {
       }`}
     >
       <div className="container flex items-center justify-between relative w-full">
-        <Image
-          src="/assets/logo_2.png"
-          // className="w-28"
-          width={112}
-          height={28}
-          alt=""
-        />
+        <Link href="/">
+          <Image
+            src="/assets/logo2.png"
+            alt="logo"
+            width={100}
+            height={28}
+            className="cursor-pointer"
+          />
+        </Link>
         <OutsideClickHandler onOutsideClick={() => setMenu(false)}>
           <RiMenu4Fill
             className="lg:hidden text-white text-xl cursor-pointer"
@@ -42,12 +55,21 @@ function Navbar() {
             <ul className="lg:flex lg:gap-6 lg:items-center text-gray-400 text-lg">
               {links.map((cons, index) => {
                 return index === links.length - 1 ? (
-                  <li
-                    key={index}
-                    className="bg-blue-600 mt-3 lg:mt-0 cursor-pointer text-white rounded-md transition-all duration-300 py-2 px-3 hover:scale-105"
-                  >
-                    <Link href={cons.id}>{cons.title}</Link>
-                  </li>
+                  user ? (
+                    <Button index={index} user={user} />
+                  ) : (
+                    <li
+                      key={index}
+                      className="bg-blue-600 mt-3 lg:mt-0 cursor-pointer text-white rounded-md transition-all duration-300  hover:scale-105"
+                    >
+                      <Link
+                        className="py-2 px-3 size-full block"
+                        href={cons.id}
+                      >
+                        {cons.title}
+                      </Link>
+                    </li>
+                  )
                 ) : (
                   <li
                     key={index}
@@ -57,7 +79,6 @@ function Navbar() {
                   </li>
                 );
               })}
-              <li className="bg-blue-600 mt-3 lg:mt-0 cursor-pointer text-white rounded-md transition-all duration-300 hover:scale-105"></li>
             </ul>
           </div>
         </OutsideClickHandler>
