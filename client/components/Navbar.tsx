@@ -13,7 +13,6 @@ import Button from "./Button";
 function Navbar() {
   const [menu, setMenu] = useState(false);
   const [scr, setScr] = useState(0);
-  // const [second, setSecond] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.auth);
   useEffect(() => {
@@ -56,7 +55,7 @@ function Navbar() {
               {links.map((cons, index) => {
                 return index === links.length - 1 ? (
                   user ? (
-                    <Button index={index} user={user} />
+                    <Button key={index} index={index} user={user} />
                   ) : (
                     <li
                       key={index}

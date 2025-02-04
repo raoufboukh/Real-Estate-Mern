@@ -15,7 +15,7 @@ const Button: React.FC<ButtonProps> = ({ index, user }) => {
   const dispatch = useDispatch<AppDispatch>();
   return (
     <li
-      key={index}
+      key={index + user}
       className="bg-blue-600 size-fit rounded-full flex justify-center items-center cursor-pointer text-white transition-all duration-300 relative"
       onClick={() => setSecond(!second)}
     >
