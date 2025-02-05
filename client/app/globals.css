@@ -42,3 +42,8 @@ body{
 .slick-list{
   @apply pl-1
 }
+
+
+.inputs {
+  @apply border-black border outline-none py-1 px-2 rounded-md
+}
