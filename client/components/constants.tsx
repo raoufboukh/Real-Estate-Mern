@@ -134,3 +134,23 @@ export const contacts = [
     btn: "Message Now",
   },
 ];
+
+
+export const AddProp = [
+  {
+    title: "Location",
+    description: "Address",
+  },
+  {
+    title: "Images",
+    description: "Upload",
+  },
+  {
+    title: "Basics",
+    description: "Details",
+  },
+  {
+    title: "Facilities",
+    description: "Select",
+  },
+];
