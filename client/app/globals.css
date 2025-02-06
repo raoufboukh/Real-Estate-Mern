@@ -45,5 +45,5 @@ body{
 
 
 .inputs {
-  @apply border-black border outline-none py-1 px-2 rounded-md
+  @apply  border outline-none py-1 px-2 rounded-md
 }
