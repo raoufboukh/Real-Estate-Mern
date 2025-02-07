@@ -19,6 +19,14 @@ const user = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    favourites: {
+      type: Array,
+      default: [],
+    },
+    booking: {
+      type: Array,
+      default: [],
+    },
   },
   { timestamps: true }
 );

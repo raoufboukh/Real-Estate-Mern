@@ -1,6 +1,7 @@
 import { generateToken } from "../lib/utils.js";
 import { User } from "../models/model.auth.js";
 import bcrypt from "bcrypt";
+import cloudinary from "../lib/cloudinary.js";
 
 export const signUp = async (req, res) => {
   try {
@@ -29,6 +30,8 @@ export const signUp = async (req, res) => {
         email: newUser.email,
         role: newUser.role,
         notification: newUser.notification,
+        favourites: newUser.favourites,
+        booking: newUser.booking,
       });
     } else {
       res.status(400).json({ message: "Invalid user data" });
@@ -54,6 +57,8 @@ export const signIn = async (req, res) => {
         email: user.email,
         role: user.role,
         notification: user.notification,
+        favourites: user.favourites,
+        booking: user.booking,
       });
     } else {
       res.status(400).json({ message: "Invalid password" });
@@ -74,9 +79,85 @@ export const signOut = (req, res) => {
   }
 };
 
+export const addFavourites = async (req, res) => {
+  try {
+    const id = req.user._id;
+    const {
+      country,
+      city,
+      adresse,
+      image,
+      title,
+      description,
+      price,
+      bedrooms,
+      parkings,
+      bathrooms,
+    } = req.body;
+    const upload = await cloudinary.uploader.upload(image);
+    const favourite = {
+      country,
+      city,
+      adresse,
+      image: upload.secure_url,
+      title,
+      description,
+      price,
+      bedrooms,
+      parkings,
+      bathrooms,
+    };
+    const user = await User.findByIdAndUpdate(
+      id,
+      { $push: { favourites: favourite } },
+      { new: true }
+    );
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+export const addBooking = async (req, res) => {
+  try {
+    const id = req.user._id;
+    const {
+      country,
+      city,
+      adresse,
+      image,
+      title,
+      description,
+      price,
+      bedrooms,
+      parkings,
+      bathrooms,
+    } = req.body;
+    const upload = await cloudinary.uploader.upload(image);
+    const favourite = {
+      country,
+      city,
+      adresse,
+      image: upload.secure_url,
+      title,
+      description,
+      price,
+      bedrooms,
+      parkings,
+      bathrooms,
+    };
+    const user = await User.findByIdAndUpdate(
+      id,
+      { $push: { booking: favourite } },
+      { new: true }
+    );
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const check = async (req, res) => {
   try {
-    // console.log(req.user);
     res.status(200).send(req.user);
   } catch (error) {
     res.status(500).json({ message: error.message });
