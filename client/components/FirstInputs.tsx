@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import Map from "./Map";
+
 interface Props {
   handleChange: (name: string, value: any) => void;
   form: any;
@@ -65,7 +67,9 @@ const FirstInputs: React.FC<Props> = ({
           )}
         </div>
       </form>
-      <div></div>
+      <div>
+        <Map address={form.address} city={form.city} country={form.country} />
+      </div>
     </div>
   );
 };
