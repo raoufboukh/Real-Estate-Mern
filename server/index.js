@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import router from "./routers/auth.routers.js";
 import cookieParser from "cookie-parser";
+import routerProperty from "./routers/property.routers.js";
 dotenv.config();
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 app.use("/", router);
+app.use("/", routerProperty);
 
 const PORT = process.env.PORT || 5000;
 
