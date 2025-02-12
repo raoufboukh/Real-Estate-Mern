@@ -79,10 +79,12 @@ export const signOut = (req, res) => {
   }
 };
 
+
 export const addFavourites = async (req, res) => {
   try {
     const id = req.user._id;
     const {
+      _id,
       country,
       city,
       adresse,
@@ -96,6 +98,7 @@ export const addFavourites = async (req, res) => {
     } = req.body;
     const upload = await cloudinary.uploader.upload(image);
     const favourite = {
+      _id: _id,
       country,
       city,
       adresse,
@@ -106,6 +109,7 @@ export const addFavourites = async (req, res) => {
       bedrooms,
       parkings,
       bathrooms,
+      createdAt: new Date(),
     };
     const user = await User.findByIdAndUpdate(
       id,
@@ -117,10 +121,26 @@ export const addFavourites = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const removeFavourites = async (req, res) => {
+  try {
+    const id = req.user._id;
+    const { _id } = req.body;
+    const user = await User.findByIdAndDelete(
+      id,
+      { $pull: { favourites: { _id } } },
+      { new: true }
+    );
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 export const addBooking = async (req, res) => {
   try {
     const id = req.user._id;
     const {
+      _id,
       country,
       city,
       adresse,
@@ -134,6 +154,7 @@ export const addBooking = async (req, res) => {
     } = req.body;
     const upload = await cloudinary.uploader.upload(image);
     const favourite = {
+      _id: _id,
       country,
       city,
       adresse,
@@ -144,10 +165,28 @@ export const addBooking = async (req, res) => {
       bedrooms,
       parkings,
       bathrooms,
+      createdAt: new Date(),
     };
     const user = await User.findByIdAndUpdate(
       id,
       { $push: { booking: favourite } },
+      { new: true }
+    );
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const removeBooking = async (req, res) => {
+  try {
+    const id = req.user._id;
+    const { _id } = req.body;
+    const user = await User.findByIdAndDelete(
+      id,
+      {
+        $pull: { booking: { _id } },
+      },
       { new: true }
     );
     res.status(200).json(user);
