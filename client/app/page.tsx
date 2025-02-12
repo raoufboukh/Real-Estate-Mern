@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import Hero from "@/components/Hero";
-import Context from "@/components/context";
 import Residencies from "@/components/Residencies";
 import Companies from "@/components/Companies";
 import Value from "@/components/Value";
@@ -29,9 +28,7 @@ export default function Home() {
         <Hero />
       </div>
       <Companies />
-      <Context>
-        <Residencies />
-      </Context>
+      <Residencies />
       <Value />
       <Contact />
       <Start />
