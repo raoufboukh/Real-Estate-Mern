@@ -31,6 +31,13 @@ export const residencies = [
     image: "/assets/r1.png",
     description:
       "Jakarta Garden City Street, Cakung. Pulo Gadung, Jakarta Timur, DKI Jakarta",
+    country: "Indonesia",
+    city: "Jakarta",
+    address:
+      "Jakarta Garden City Street, Cakung. Pulo Gadung, Jakarta Timur, DKI Jakarta",
+    bedrooms: 5,
+    parkings: 2,
+    bathrooms: 3,
     price: "47,043",
   },
   {
@@ -39,6 +46,13 @@ export const residencies = [
     image: "/assets/r2.png",
     description:
       "Pahlawan Street XVII NO.215, Cinangka, Sawangan, Depok, Jawa Barat",
+    country: "Indonesia",
+    city: "Depok",
+    address:
+      "Pahlawan Street XVII NO.215, Cinangka, Sawangan, Depok, Jawa Barat",
+    bedrooms: 7,
+    parkings: 3,
+    bathrooms: 4,
     price: "66,353",
   },
   {
@@ -47,6 +61,13 @@ export const residencies = [
     image: "/assets/r3.png",
     description:
       "Ruko Puri Indah Residence Block A7, Lingkar Street, Ciracas, Serang, Banten",
+    country: "Indonesia",
+    city: "Serang",
+    address:
+      "Ruko Puri Indah Residence Block A7, Lingkar Street, Ciracas, Serang, Banten",
+    bedrooms: 4,
+    parkings: 1,
+    bathrooms: 2,
     price: "35,853",
   },
   {
@@ -55,6 +76,13 @@ export const residencies = [
     image: "/assets/r1.png",
     description:
       "Jakarta Garden City Street, Cakung. Pulo Gadung, Jakarta Timur, DKI Jakarta",
+    country: "Indonesia",
+    city: "Jakarta",
+    address:
+      "Jakarta Garden City Street, Cakung. Pulo Gadung, Jakarta Timur, DKI Jakarta",
+    bedrooms: 5,
+    parkings: 2,
+    bathrooms: 3,
     price: "47,043",
   },
   {
@@ -63,6 +91,13 @@ export const residencies = [
     image: "/assets/r2.png",
     description:
       "Pahlawan Street XVII NO.215, Cinangka, Sawangan, Depok, Jawa Barat",
+    country: "Indonesia",
+    city: "Depok",
+    address:
+      "Pahlawan Street XVII NO.215, Cinangka, Sawangan, Depok, Jawa Barat",
+    bedrooms: 7,
+    parkings: 3,
+    bathrooms: 4,
     price: "66,353",
   },
   {
