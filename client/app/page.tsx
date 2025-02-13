@@ -10,7 +10,7 @@ import Value from "@/components/Value";
 import Contact from "@/components/Contact";
 import Start from "@/components/Start";
 import Footer from "@/components/Footer";
-import { Toaster } from "react-hot-toast";
+// import { Toaster } from "react-hot-toast";
 
 export default function Home() {
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function Home() {
       <Contact />
       <Start />
       <Footer />
-      <Toaster />
+
     </>
   );
 }
