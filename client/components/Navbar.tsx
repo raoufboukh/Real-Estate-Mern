@@ -8,7 +8,8 @@ import { links } from "./constants";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "./store/store";
 import { checkAuth } from "./store/AuthSlices";
-import Button from "./Button";
+import ButtonAdd from "./ButtonAdd";
+import LastButton from "./LastButton";
 
 function Navbar() {
   const [menu, setMenu] = useState(false);
@@ -54,21 +55,9 @@ function Navbar() {
             <ul className="lg:flex lg:gap-6 lg:items-center text-gray-400 text-lg">
               {links.map((cons, index) => {
                 return index === links.length - 1 ? (
-                  user ? (
-                    <Button key={index} index={index} user={user} />
-                  ) : (
-                    <li
-                      key={index}
-                      className="bg-blue-600 mt-3 lg:mt-0 cursor-pointer text-white rounded-md transition-all duration-300  hover:scale-105"
-                    >
-                      <Link
-                        className="py-2 px-3 size-full block"
-                        href={cons.id}
-                      >
-                        {cons.title}
-                      </Link>
-                    </li>
-                  )
+                  <LastButton key={index} cons={cons} user={user} />
+                ) : cons.title === "Add Property" ? (
+                  <ButtonAdd key={index} cons={cons} user={user} />
                 ) : (
                   <li
                     key={index}

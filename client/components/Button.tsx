@@ -6,16 +6,14 @@ import Link from "next/link";
 import { logout } from "./store/AuthSlices";
 
 interface ButtonProps {
-  index: number;
   user: any;
 }
 
-const Button: React.FC<ButtonProps> = ({ index, user }) => {
+const Button: React.FC<ButtonProps> = ({ user }) => {
   const [second, setSecond] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   return (
     <li
-      key={index + user}
       className="bg-blue-600 size-fit rounded-full flex justify-center items-center cursor-pointer text-white transition-all duration-300 relative"
       onClick={() => setSecond(!second)}
     >
