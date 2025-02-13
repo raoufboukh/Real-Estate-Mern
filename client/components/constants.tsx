@@ -102,3 +102,10 @@ export const AddProp = [
     description: "Select",
   },
 ];
+
+
+export const linksUser = [
+  { title: "favourites", id: "/favourites" },
+  { title: "booking", id: "/booking" },
+  { title: "logout", id: "" },
+];
