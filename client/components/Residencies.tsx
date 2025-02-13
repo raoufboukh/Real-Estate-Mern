@@ -1,19 +1,19 @@
+"use client";
 /* eslint-disable no-var */
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import { useContext } from "react";
-import { residContext } from "./context";
 import Image from "next/image";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "./store/store";
+import { useEffect } from "react";
+import { GetProps } from "./store/PropSlices";
+import Spinner from "./Spinner";
 
 function Residencies() {
-  const residencies = useContext(residContext) as {
-    id: string;
-    image: string;
-    price: number;
-    name: string;
-    description: string;
-  }[];
+  const { props, loading } = useSelector((state: RootState) => state.props);
+  const dispatch = useDispatch<AppDispatch>();
   var settings = {
     infinite: true,
     speed: 300,
@@ -44,6 +44,9 @@ function Residencies() {
       },
     ],
   };
+  useEffect(() => {
+    dispatch(GetProps());
+  }, [dispatch]);
   return (
     <section id="resid">
       <div className="container">
@@ -53,36 +56,40 @@ function Residencies() {
         <h3 className="text-blue-950 font-bold text-2xl md:text-4xl">
           Popular Residencies
         </h3>
-        <Slider className="my-10" {...settings}>
-          {residencies.map((resid) => {
-            return (
-              <div
-                className="overflow-hidden hover:bg-indigo-100 hover:scale-[1.03] transition-all duration-300 p-4 cursor-pointer rounded-md my-5"
-                key={resid.id}
-              >
-                <div>
-                  <Image
-                    className="size-full"
-                    src={resid.image}
-                    width={1000}
-                    height={1000}
-                    alt="prop"
-                  />
+        {loading ? (
+          <Spinner />
+        ) : (
+          <Slider className="my-10" {...settings}>
+            {props.map((prop) => {
+              return (
+                <div
+                  className="overflow-hidden hover:bg-indigo-100 hover:scale-[1.03] transition-all duration-300 p-4 cursor-pointer rounded-md my-5"
+                  key={prop._id}
+                >
+                  <div>
+                    <Image
+                      className="size-full"
+                      src={prop.image}
+                      width={1000}
+                      height={1000}
+                      alt="prop"
+                    />
+                  </div>
+                  <div className="py-2 px-3">
+                    <p className="text-2xl text-gray-400 my-1 font-bold">
+                      <span className="text-yellow-400">$</span>
+                      {prop.price}
+                    </p>
+                    <h3 className="font-bold text-blue-900 text-2xl my-1">
+                      {prop.title}
+                    </h3>
+                    <p className="text-xs text-gray-400">{prop.description}</p>
+                  </div>
                 </div>
-                <div className="py-2 px-3">
-                  <p className="text-2xl text-gray-400 my-1 font-bold">
-                    <span className="text-yellow-400">$</span>
-                    {resid.price}
-                  </p>
-                  <h3 className="font-bold text-blue-900 text-2xl my-1">
-                    {resid.name}
-                  </h3>
-                  <p className="text-xs text-gray-400">{resid.description}</p>
-                </div>
-              </div>
-            );
-          })}
-        </Slider>
+              );
+            })}
+          </Slider>
+        )}
       </div>
     </section>
   );
