@@ -49,6 +49,39 @@ export const register = createAsyncThunk(
     }
   }
 );
+
+export const addFavorite = createAsyncThunk(
+  "auth/favourites",
+  async (data: any, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put("/add-favourites", data);
+      toast.success("Added to favourites");
+      return response.data;
+    } catch (error) {
+      const errorMessage =
+        (error as any).response?.data?.message || "An error occurred";
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage);
+    }
+  }
+);
+
+export const removeFavorite = createAsyncThunk(
+  "auth/removeFav",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.delete(`/remove-favourites/${id}`);
+      toast.success("Removed favourites");
+      return response.data;
+    } catch (error) {
+      const errorMessage =
+        (error as any).response?.data?.message || "An error occurred";
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage);
+    }
+  }
+);
+
 export const logout = createAsyncThunk(
   "auth/logout",
   async (_, { rejectWithValue }) => {
@@ -70,6 +103,8 @@ export interface User {
   email: string;
   notification: [string | number];
   role: string;
+  favourites: [any];
+  booking: [any];
 }
 
 interface AuthState {
@@ -121,6 +156,20 @@ export const AuthSlice = createSlice({
       })
       .addCase(register.rejected, (state) => {
         state.isSignInUp = false;
+      }).addCase(addFavorite.pending, (state) => {
+        state.isChecking = true;
+      }).addCase(addFavorite.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isChecking = false;
+      }).addCase(addFavorite.rejected, (state) => {
+        state.isChecking = false;
+      }).addCase(removeFavorite.pending, (state) => {
+        state.isChecking = true;
+      }).addCase(removeFavorite.fulfilled, (state,action) => {
+        state.user = action.payload;
+        state.isChecking = false;
+      }).addCase(removeFavorite.rejected, (state) => {
+        state.isChecking = false;
       })
       .addCase(logout.pending, (state) => {
         state.isChecking = true;
