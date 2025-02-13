@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "./store/store";
 import Link from "next/link";
 import { logout } from "./store/AuthSlices";
+import { linksUser } from "./constants";
 
 interface ButtonProps {
   user: any;
@@ -26,24 +27,25 @@ const Button: React.FC<ButtonProps> = ({ user }) => {
         } top-10  right-2 p-1 rounded-md bg-white text-gray-600 `}
       >
         <ul>
-          <li
-            className="hover:text-gray-900"
-            onClick={() => setSecond(!second)}
-          >
-            <Link href={"/favourites"}>Favourites</Link>
-          </li>
-          <li
-            className="hover:text-gray-900"
-            onClick={() => setSecond(!second)}
-          >
-            <Link href={"/booking"}>Booking</Link>
-          </li>
-          <li
-            className="hover:text-gray-900"
-            onClick={() => dispatch(logout())}
-          >
-            logout
-          </li>
+          {linksUser.map((cons, index) => {
+            return cons.title === "logout" ? (
+              <li
+                key={index}
+                className="hover:text-gray-900"
+                onClick={() => dispatch(logout())}
+              >
+                {cons.title}
+              </li>
+            ) : (
+              <li
+                key={index}
+                className="hover:text-gray-900"
+                onClick={() => setSecond(!second)}
+              >
+                <Link href={cons.id}>{cons.title}</Link>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </li>
