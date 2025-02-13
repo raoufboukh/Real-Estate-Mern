@@ -83,34 +83,7 @@ export const signOut = (req, res) => {
 export const addFavourites = async (req, res) => {
   try {
     const id = req.user._id;
-    const {
-      _id,
-      country,
-      city,
-      adresse,
-      image,
-      title,
-      description,
-      price,
-      bedrooms,
-      parkings,
-      bathrooms,
-    } = req.body;
-    const upload = await cloudinary.uploader.upload(image);
-    const favourite = {
-      _id: _id,
-      country,
-      city,
-      adresse,
-      image: upload.secure_url,
-      title,
-      description,
-      price,
-      bedrooms,
-      parkings,
-      bathrooms,
-      createdAt: new Date(),
-    };
+    const favourite = req.body;
     const user = await User.findByIdAndUpdate(
       id,
       { $push: { favourites: favourite } },
@@ -118,6 +91,7 @@ export const addFavourites = async (req, res) => {
     );
     res.status(200).json(user);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -125,10 +99,10 @@ export const addFavourites = async (req, res) => {
 export const removeFavourites = async (req, res) => {
   try {
     const id = req.user._id;
-    const { _id } = req.body;
-    const user = await User.findByIdAndDelete(
+    const favId = req.params.id;
+    const user = await User.findByIdAndUpdate(
       id,
-      { $pull: { favourites: { _id } } },
+      { $pull: { favourites: { _id: favId } } },
       { new: true }
     );
     res.status(200).json(user);
@@ -139,37 +113,10 @@ export const removeFavourites = async (req, res) => {
 export const addBooking = async (req, res) => {
   try {
     const id = req.user._id;
-    const {
-      _id,
-      country,
-      city,
-      adresse,
-      image,
-      title,
-      description,
-      price,
-      bedrooms,
-      parkings,
-      bathrooms,
-    } = req.body;
-    const upload = await cloudinary.uploader.upload(image);
-    const favourite = {
-      _id: _id,
-      country,
-      city,
-      adresse,
-      image: upload.secure_url,
-      title,
-      description,
-      price,
-      bedrooms,
-      parkings,
-      bathrooms,
-      createdAt: new Date(),
-    };
+    const booking = req.body;
     const user = await User.findByIdAndUpdate(
       id,
-      { $push: { booking: favourite } },
+      { $push: { booking: booking } },
       { new: true }
     );
     res.status(200).json(user);
@@ -181,11 +128,11 @@ export const addBooking = async (req, res) => {
 export const removeBooking = async (req, res) => {
   try {
     const id = req.user._id;
-    const { _id } = req.body;
+    const bookId = req.params.id;
     const user = await User.findByIdAndDelete(
       id,
       {
-        $pull: { booking: { _id } },
+        $pull: { booking: { _id: bookId } },
       },
       { new: true }
     );

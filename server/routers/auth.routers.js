@@ -18,8 +18,8 @@ router.route("/signUp").post(signUp);
 router.route("/signOut").get(ProtectRoute, signOut);
 router.route("/check").get(ProtectRoute, check);
 router.route("/add-favourites").put(ProtectRoute, addFavourites);
-router.route("/remove-favourites").put(ProtectRoute, removeFavourites);
+router.route("/remove-favourites/:id").delete(ProtectRoute, removeFavourites);
 router.route("/add-booking").put(ProtectRoute, addBooking);
-router.route("/remove-booking").put(ProtectRoute, removeBooking);
+router.route("/remove-booking/:id").delete(ProtectRoute, removeBooking);
 
 export default router;
