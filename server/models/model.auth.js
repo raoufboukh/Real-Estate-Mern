@@ -1,5 +1,13 @@
 import mongoose from "mongoose";
 
+const bookingSchema = new mongoose.Schema({
+  prop: {
+    type: Object,
+    ref: "Property",
+  },
+  date: { type: Date, required: true },
+});
+
 const user = new mongoose.Schema(
   {
     email: {
@@ -24,7 +32,7 @@ const user = new mongoose.Schema(
       default: [],
     },
     booking: {
-      type: Array,
+      type: [bookingSchema],
       default: [],
     },
   },

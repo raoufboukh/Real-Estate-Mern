@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import router from "./routers/auth.routers.js";
 import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
 import routerProperty from "./routers/property.routers.js";
 dotenv.config();
 
@@ -16,7 +17,9 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.json());
+app.use(express.json({ limit: "50mb", extended: true }));
+app.use(bodyParser.json({ limit: "50mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
 app.use("/", router);
 app.use("/", routerProperty);

@@ -110,6 +110,7 @@ export const removeFavourites = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 export const addBooking = async (req, res) => {
   try {
     const id = req.user._id;
@@ -129,11 +130,9 @@ export const removeBooking = async (req, res) => {
   try {
     const id = req.user._id;
     const bookId = req.params.id;
-    const user = await User.findByIdAndDelete(
+    const user = await User.findByIdAndUpdate(
       id,
-      {
-        $pull: { booking: { _id: bookId } },
-      },
+      { $pull: { booking: { _id: bookId } } },
       { new: true }
     );
     res.status(200).json(user);
