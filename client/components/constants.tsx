@@ -8,19 +8,19 @@ import { TiDelete } from "react-icons/ti";
 export const links = [
   {
     title: "Properties",
-    id: "properties",
+    id: "/properties",
   },
   {
     title: "Contact Us",
-    id: "contact",
+    id: "/contact",
   },
   {
     title: "Add Property",
-    id: "add",
+    id: "/add",
   },
   {
     title: "Login",
-    id: "login",
+    id: "/login",
   },
 ];
 
