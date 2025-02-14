@@ -20,11 +20,11 @@ const LastInputs: React.FC<Props> = ({
         <input
           type="number"
           id="bed"
-          value={form.bedroom ?? ""}
+          value={form.bedrooms ?? ""}
           className={`${
             errors.bedroom ? "border-red-500" : "border-black"
           }  inputs`}
-          onChange={(e) => handleChange("bedroom", e.target.valueAsNumber)}
+          onChange={(e) => handleChange("bedrooms", e.target.valueAsNumber)}
           onBlur={(e) => handleBar("bedroom", e.target.valueAsNumber)}
           min={0}
         />
@@ -37,11 +37,11 @@ const LastInputs: React.FC<Props> = ({
         <input
           type="number"
           id="par"
-          value={form.parking ?? ""}
+          value={form.parkings ?? ""}
           className={`${
             errors.parking ? "border-red-500" : "border-black"
           }  inputs`}
-          onChange={(e) => handleChange("parking", e.target.valueAsNumber)}
+          onChange={(e) => handleChange("parkings", e.target.valueAsNumber)}
           onBlur={(e) => handleBar("parking", e.target.valueAsNumber)}
           min={0}
         />
@@ -54,11 +54,11 @@ const LastInputs: React.FC<Props> = ({
         <input
           type="number"
           id="br"
-          value={form.bathroom ?? ""}
+          value={form.bathrooms ?? ""}
           className={`${
             errors.bathroom ? "border-red-500" : "border-black"
           }  inputs`}
-          onChange={(e) => handleChange("bathroom", e.target.valueAsNumber)}
+          onChange={(e) => handleChange("bathrooms", e.target.valueAsNumber)}
           onBlur={(e) => handleBar("bathroom", e.target.valueAsNumber)}
           min={0}
         />

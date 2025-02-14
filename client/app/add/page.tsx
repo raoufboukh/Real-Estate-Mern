@@ -5,9 +5,13 @@ import { AddProp } from "@/components/constants";
 import FirstInputs from "@/components/FirstInputs";
 import LastInputs from "@/components/LastInputs";
 import SecondInputs from "@/components/SecondInputs";
+import { addProps } from "@/components/store/PropSlices";
+import { AppDispatch } from "@/components/store/store";
 import ThirdInputs from "@/components/ThirdInputs";
+// import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 
 interface FormState {
   country: string;
@@ -16,9 +20,9 @@ interface FormState {
   title: string;
   description: string;
   price: string | number;
-  bedroom: string | number;
-  parking: string | number;
-  bathroom: string | number;
+  bedrooms: string | number;
+  parkings: string | number;
+  bathrooms: string | number;
   image: string | null;
 }
 interface ErrorState {
@@ -36,6 +40,8 @@ interface ErrorState {
 
 const Add = () => {
   const [count, setCount] = useState(0);
+  // const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
   const [form, setForm] = useState<FormState>({
     country: "",
     city: "",
@@ -43,9 +49,9 @@ const Add = () => {
     title: "",
     description: "",
     price: "",
-    bedroom: "",
-    parking: "",
-    bathroom: "",
+    bedrooms: "",
+    parkings: "",
+    bathrooms: "",
     image: "",
   });
   const [errors, setErrors] = useState<ErrorState>({
@@ -146,6 +152,10 @@ const Add = () => {
             className={`${
               count === 3 ? "block" : "hidden"
             } bg-green-600 text-white py-1 px-2 rounded-sm`}
+             onClick={() => {
+              dispatch(addProps(form));
+
+             }}
           >
             Add Property
           </button>
