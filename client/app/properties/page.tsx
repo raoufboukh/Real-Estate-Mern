@@ -10,6 +10,7 @@ import Spinner from "@/components/Spinner";
 import Navbar from "@/components/Navbar";
 import toast from "react-hot-toast";
 import { addFavorite, removeFavorite } from "@/components/store/AuthSlices";
+import Link from "next/link";
 
 function Properties() {
   const { user } = useSelector((state: RootState) => state.auth);
@@ -53,13 +54,14 @@ function Properties() {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 gap-x-7 my-5">
               {props.map((prop) => (
-                <div
+                <Link
+                  href={`/properties/${prop._id}`}
                   key={prop._id}
                   className="rounded-lg shadow-md overflow-hidden cursor-pointer hover:bg-indigo-100 hover:scale-[1.03] transition-all duration-300"
                 >
                   <div className="relative">
                     <div
-                      className="absolute top-3 right-5 cursor-pointer"
+                      className="absolute top-3 right-5 cursor-pointer z-10"
                       onClick={() => handleFavoriteClick(prop)}
                     >
                       <FaRegHeart
@@ -101,7 +103,7 @@ function Properties() {
                       {prop.description}
                     </p>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}
