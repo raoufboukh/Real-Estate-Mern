@@ -82,6 +82,38 @@ export const removeFavorite = createAsyncThunk(
   }
 );
 
+export const addBooking = createAsyncThunk(
+  "auth/addBooking",
+  async (data: any, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put("/add-booking", data);
+      toast.success("Add Booking successful");
+      return response.data;
+    } catch (error) {
+      const errorMessage =
+        (error as any).response?.data?.message || "An error occurred";
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage);
+    }
+  }
+);
+
+export const removeBooking = createAsyncThunk(
+  "auth/removeBooking",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.delete(`/remove-booking/${id}`);
+      toast.success("Remove booking successful");
+      return response.data;
+    } catch (error) {
+      const errorMessage =
+        (error as any).response?.data?.message || "An error occurred";
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage);
+    }
+  }
+);
+
 export const logout = createAsyncThunk(
   "auth/logout",
   async (_, { rejectWithValue }) => {
@@ -156,19 +188,39 @@ export const AuthSlice = createSlice({
       })
       .addCase(register.rejected, (state) => {
         state.isSignInUp = false;
-      }).addCase(addFavorite.pending, (state) => {
+      })
+      .addCase(addFavorite.pending, (state) => {
         state.isChecking = true;
-      }).addCase(addFavorite.fulfilled, (state, action) => {
+      })
+      .addCase(addFavorite.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isChecking = false;
-      }).addCase(addFavorite.rejected, (state) => {
+      })
+      .addCase(addFavorite.rejected, (state) => {
         state.isChecking = false;
-      }).addCase(removeFavorite.pending, (state) => {
+      })
+      .addCase(removeFavorite.pending, (state) => {
         state.isChecking = true;
-      }).addCase(removeFavorite.fulfilled, (state,action) => {
+      })
+      .addCase(removeFavorite.fulfilled, (state,action) => {
         state.user = action.payload;
         state.isChecking = false;
-      }).addCase(removeFavorite.rejected, (state) => {
+      })
+      .addCase(removeFavorite.rejected, (state) => {
+        state.isChecking = false;
+      }).addCase(addBooking.pending, (state) => {
+        state.isChecking = true;
+      }).addCase(addBooking.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isChecking = false;
+      }).addCase(addBooking.rejected, (state) => {
+        state.isChecking = false;
+      }).addCase(removeBooking.pending, (state) => {
+        state.isChecking = true;
+      }).addCase(removeBooking.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isChecking = false;
+      }).addCase(removeBooking.rejected, (state) => {
         state.isChecking = false;
       })
       .addCase(logout.pending, (state) => {

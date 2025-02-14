@@ -1,26 +1,47 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../lib/axios";
+import toast from "react-hot-toast";
 
-
-
-export const GetProps = createAsyncThunk('prop/getProps', async (_, {rejectWithValue}) => {
+export const GetProps = createAsyncThunk(
+  "prop/getProps",
+  async (_, { rejectWithValue }) => {
     try {
-        const response = await axiosInstance.get('/properties')
-        return response.data;
+      const response = await axiosInstance.get("/properties");
+      return response.data;
     } catch (error) {
-        return rejectWithValue(error)
+      return rejectWithValue(error);
     }
-})
+  }
+);
 
-export const addProps = createAsyncThunk('prop/addProps', async(data:any, {rejectWithValue}) => {
+export const getProperty = createAsyncThunk(
+  "prop/property",
+  async (id: string, { rejectWithValue }) => {
     try {
-        const response = await axiosInstance.post("/add-properties", data);
-        return response.data;
+      const response = await axiosInstance.get(`/properties/${id}`);
+      return response.data;
     } catch (error) {
-        return rejectWithValue(error)
+      const errorMessage =
+        (error as any).response?.data?.message || "An error occurred";
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage);
     }
-})
+  }
+);
+
+export const addProps = createAsyncThunk(
+  "prop/addProps",
+  async (data: any, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post("/add-properties", data);
+      toast.success("Property added successfully");
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
 interface Props {
   _id: string;
@@ -66,7 +87,15 @@ export const PropSlices = createSlice({
             state.loading = false;
         }).addCase(GetProps.rejected, (state) => {
             state.loading = false;
-        }).addCase(addProps.pending, (state) => {
+        }).addCase(getProperty.pending, (state) => {
+            state.loading = true;
+        }).addCase(getProperty.fulfilled, (state, action) => {
+            state.prop = action.payload;
+            state.loading = false;
+        }).addCase(getProperty.rejected, (state) => {
+            state.loading = false;
+        })
+        .addCase(addProps.pending, (state) => {
             state.loading = true;
         }).addCase(addProps.fulfilled, (state,action) => {
             state.props = [...state.props, action.payload];
