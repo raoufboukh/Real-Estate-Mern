@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Marker, Popup, useMap } from "react-leaflet";
-import * as ELG from "esri-leaflet-geocoder";
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const ELG = require("esri-leaflet-geocoder");
 
 interface Props {
   address: string;
@@ -23,9 +25,7 @@ const GeoCoderMarker: React.FC<Props> = ({ address }) => {
       return;
     }
 
-    const geocodeService = ELG.geocode();
-
-    geocodeService
+    ELG.geocode()
       .text(address)
       .run(
         (

@@ -1,6 +1,12 @@
 /* eslint-disable @next/next/no-before-interactive-script-outside-document */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
+declare global {
+  interface Window {
+    cloudinary: any;
+  }
+}
 import Image from "next/image";
 import Script from "next/script";
 import toast from "react-hot-toast";

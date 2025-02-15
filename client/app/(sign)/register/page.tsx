@@ -33,8 +33,8 @@ const Login = () => {
           />
         </div>
         <div className="text-center">
-          <h3 className="text-lg">Welcome</h3>
-          <p className="text-gray-400">Login to your account</p>
+          <h3 className="text-lg">Welcome!</h3>
+          <p className="text-gray-400">Create New Account</p>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="my-4">
@@ -66,7 +66,7 @@ const Login = () => {
               type="submit"
               className="w-full bg-blue-600 text-white p-2 rounded-md"
             >
-              Login
+              Create Account
             </button>
           </div>
         </form>

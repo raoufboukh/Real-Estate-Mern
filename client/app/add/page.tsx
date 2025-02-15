@@ -8,6 +8,7 @@ import SecondInputs from "@/components/SecondInputs";
 import { addProps } from "@/components/store/PropSlices";
 import { AppDispatch } from "@/components/store/store";
 import ThirdInputs from "@/components/ThirdInputs";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { useDispatch } from "react-redux";
@@ -39,6 +40,7 @@ interface ErrorState {
 
 const Add = () => {
   const [count, setCount] = useState(0);
+  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const [form, setForm] = useState<FormState>({
     country: "",
@@ -102,6 +104,81 @@ const Add = () => {
       errors={errors}
     />,
   ];
+
+  const handleInformation = () => {
+    if (count === 0) {
+      if (!form.country || !form.city || !form.address) {
+        setErrors({
+          ...errors,
+          country: "Country is required",
+          city: "City is required",
+          address: "Address is required",
+        });
+      } else {
+        setErrors({
+          ...errors,
+          country: "",
+          city: "",
+          address: "",
+        });
+        setCount(count + 1);
+      }
+    }
+    if(count === 1){
+      if(!form.image){
+        setErrors({
+          ...errors,
+          image: "Image is required"
+        })
+      }else{
+        setErrors({
+          ...errors,
+          image: ""
+        })
+        setCount(count + 1)
+      }
+    }
+    if (count === 2) {
+      if (!form.title || !form.description || !form.price) {
+        setErrors({
+          ...errors,
+          title: "Title is required",
+          description: "Description is required",
+          price: "Price is required",
+        });
+      } else {
+        setErrors({
+          ...errors,
+          title: "",
+          description: "",
+          price: "",
+        });
+        setCount(count + 1);
+      }
+    }
+    if(count === 3){
+      if(!form.bedrooms || !form.parkings || !form.bathrooms){
+        setErrors({
+          ...errors,
+          bedroom: "Bedrooms is required",
+          parking: "Parkings is required",
+          bathroom: "Bathrooms is required"
+        })
+      }else{
+        setErrors({
+          ...errors,
+          bedroom: "",
+          parking: "",
+          bathroom: ""
+        })
+        dispatch(addProps(form)).then((action) => {
+          if (addProps.fulfilled.match(action)) {
+            router.push("/properties");
+          }
+        });
+      }
+    }
+  }
   useEffect(() => {
        if (typeof window !== "undefined") {
          const script = document.createElement("script");
@@ -151,7 +228,7 @@ const Add = () => {
             Back
           </button>
           <button
-            onClick={() => setCount(count + 1)}
+            onClick={() => handleInformation()}
             className={`${
               count === 3 ? "hidden" : "block"
             } bg-sky-600 text-white py-1 px-2 rounded-sm`}
@@ -162,9 +239,7 @@ const Add = () => {
             className={`${
               count === 3 ? "block" : "hidden"
             } bg-green-600 text-white py-1 px-2 rounded-sm`}
-            onClick={() => {
-              dispatch(addProps(form));
-            }}
+            onClick={() => handleInformation()}
           >
             Add Property
           </button>
