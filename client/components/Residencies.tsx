@@ -10,6 +10,7 @@ import { AppDispatch, RootState } from "./store/store";
 import { useEffect } from "react";
 import { GetProps } from "./store/PropSlices";
 import Spinner from "./Spinner";
+import Link from "next/link";
 
 function Residencies() {
   const { props, loading } = useSelector((state: RootState) => state.props);
@@ -62,7 +63,8 @@ function Residencies() {
           <Slider className="my-10" {...settings}>
             {props.map((prop) => {
               return (
-                <div
+                <Link
+                  href={`/properties/${prop._id}`}
                   className="overflow-hidden hover:bg-indigo-100 hover:scale-[1.03] transition-all duration-300 p-4 cursor-pointer rounded-md my-5"
                   key={prop._id}
                 >
@@ -85,7 +87,7 @@ function Residencies() {
                     </h3>
                     <p className="text-xs text-gray-400">{prop.description}</p>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </Slider>

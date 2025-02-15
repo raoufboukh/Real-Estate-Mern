@@ -8,8 +8,7 @@ import SecondInputs from "@/components/SecondInputs";
 import { addProps } from "@/components/store/PropSlices";
 import { AppDispatch } from "@/components/store/store";
 import ThirdInputs from "@/components/ThirdInputs";
-// import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 
@@ -40,7 +39,6 @@ interface ErrorState {
 
 const Add = () => {
   const [count, setCount] = useState(0);
-  // const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const [form, setForm] = useState<FormState>({
     country: "",
@@ -104,12 +102,24 @@ const Add = () => {
       errors={errors}
     />,
   ];
+  useEffect(() => {
+       if (typeof window !== "undefined") {
+         const script = document.createElement("script");
+         script.src = "https://upload-widget.cloudinary.com/global/all.js";
+         script.async = true;
+         document.body.appendChild(script);
+       }
+     }, []);
   return (
-    <div className="size-full fixed flex justify-center items-center bg-black">
-      <div className="size-[90%] p-10 bg-white">
-        <ul className="flex justify-between items-center">
+    <div
+      className={`${
+        count === 0 ? "lg:fixed" : "fixed"
+      } w-full h-full flex justify-center items-center bg-black`}
+    >
+      <div className="w-[90%] py-3 p-1 md:p-10 bg-white">
+        <ul className="flex justify-center md:justify-between items-center flex-wrap gap-8">
           {AddProp.map((prop, index) => (
-            <div key={index}>
+            <div key={index} className="basis-[113px]">
               <li className="flex items-center gap-2">
                 {count > index ? (
                   <FaCheckCircle className="text-sky-600 size-10" />
@@ -152,10 +162,9 @@ const Add = () => {
             className={`${
               count === 3 ? "block" : "hidden"
             } bg-green-600 text-white py-1 px-2 rounded-sm`}
-             onClick={() => {
+            onClick={() => {
               dispatch(addProps(form));
-
-             }}
+            }}
           >
             Add Property
           </button>
