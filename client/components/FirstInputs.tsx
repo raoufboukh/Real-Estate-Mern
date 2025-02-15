@@ -2,6 +2,7 @@
 "use client";
 
 import Map from "./Map";
+import useCountries from "./useCountries";
 
 interface Props {
   handleChange: (name: string, value: any) => void;
@@ -22,8 +23,7 @@ const FirstInputs: React.FC<Props> = ({
       <form>
         <div className="flex flex-col gap-1">
           <label htmlFor="cou">Country</label>
-          <input
-            type="text"
+          <select
             id="cou"
             value={form.country}
             className={`${
@@ -31,7 +31,13 @@ const FirstInputs: React.FC<Props> = ({
             } inputs`}
             onChange={(e) => handleChange("country", e.target.value)}
             onBlur={(e) => handleBar("country", e.target.value)}
-          />
+          >
+            {useCountries().map((country) => (
+              <option key={country.value} value={country.value}>
+                {country.label}
+              </option>
+            ))}
+          </select>
           {errors.country && (
             <p className="text-red-500 text-xs">{errors.country}</p>
           )}
