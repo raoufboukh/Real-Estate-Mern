@@ -24,14 +24,14 @@ const Button: React.FC<ButtonProps> = ({ user }) => {
       <div
         className={`${
           second ? "absolute" : "hidden"
-        } top-10  right-2 p-1 rounded-md bg-white text-gray-600 `}
+        } top-10  right-2 px-4 py-2 rounded-md bg-white text-gray-600 `}
       >
         <ul>
           {linksUser.map((cons, index) => {
             return cons.title === "logout" ? (
               <li
                 key={index}
-                className="hover:text-gray-900"
+                className="hover:text-gray-900  hover:translate-x-1 transition-all duration-300"
                 onClick={() => dispatch(logout())}
               >
                 {cons.title}
@@ -39,10 +39,12 @@ const Button: React.FC<ButtonProps> = ({ user }) => {
             ) : (
               <li
                 key={index}
-                className="hover:text-gray-900"
+                className="hover:text-gray-900 hover:translate-x-1 transition-all duration-300"
                 onClick={() => setSecond(!second)}
               >
-                <Link href={cons.id}>{cons.title}</Link>
+                <Link className="block size-full" href={cons.id}>
+                  {cons.title}
+                </Link>
               </li>
             );
           })}
