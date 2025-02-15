@@ -12,6 +12,9 @@ export const signUp = async (req, res) => {
       return res.status(400).json({ message: "Password is required" });
 
     const user = await User.findOne({ email });
+    const regExp = /^\w+@\w{4,}.\w{2,}/gi;
+    if (!regExp.test(email))
+      return res.status(400).json({ message: "Invalid email" });
 
     if (user) return res.status(400).json({ message: "User already exists" });
 
