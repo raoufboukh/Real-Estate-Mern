@@ -21,6 +21,7 @@ import {
 } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
+import { enablePageScroll, disablePageScroll } from "scroll-lock";
 import "react-datepicker/dist/react-datepicker.css";
 
 const SinglePage = () => {
@@ -68,7 +69,7 @@ const SinglePage = () => {
       <div
         className={
           data
-            ? "size-full absolute bg-black/80 z-50 flex items-center justify-center"
+            ? "size-full fixed bg-black/80 z-40 flex items-center justify-center"
             : "hidden"
         }
       >
@@ -94,7 +95,10 @@ const SinglePage = () => {
           <div className="flex justify-between -mt-1">
             <button
               className="bg-blue-800 text-white py-2 px-5 rounded-md hover:scale-105 transition-all duration-300"
-              onClick={() => setData(false)}
+              onClick={() => {
+                setData(false);
+                enablePageScroll();
+              }}
             >
               Close
             </button>
@@ -191,6 +195,7 @@ const SinglePage = () => {
                       onClick={() => {
                         if (user) {
                           setData(true);
+                          disablePageScroll();
                         } else {
                           toast.error("Please login to book a visit");
                         }
@@ -204,11 +209,9 @@ const SinglePage = () => {
                   ) && (
                     <p className="text-red-500 text-center">
                       You have a booking for this property{" "}
-                      {
-                        user.booking.find(
-                          (book: any) => book.prop._id === prop._id
-                        )?.date.slice(0,10)
-                      }
+                      {user.booking
+                        .find((book: any) => book.prop._id === prop._id)
+                        ?.date.slice(0, 10)}
                     </p>
                   )}
                 </div>

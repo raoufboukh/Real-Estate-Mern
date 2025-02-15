@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { AppDispatch, RootState } from "@/components/store/store"; // Adjust the import path according to your project structure
+import { AppDispatch, RootState } from "@/components/store/store";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { FaRegHeart, FaMapMarkerAlt, FaHeart } from "react-icons/fa";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { GetProps } from "@/components/store/PropSlices";
 import Spinner from "@/components/Spinner";
 import Navbar from "@/components/Navbar";
@@ -13,6 +13,8 @@ import { addFavorite, removeFavorite } from "@/components/store/AuthSlices";
 import Link from "next/link";
 
 function Properties() {
+  const [search, setSearch] = useState("");
+  const [data, setData] = useState<any>([]);
   const { user } = useSelector((state: RootState) => state.auth);
   const { props, loading } = useSelector((state: RootState) => state.props);
   const dispatch = useDispatch<AppDispatch>();
@@ -33,6 +35,21 @@ function Properties() {
     }
   };
 
+  useEffect(() => {
+    if (search === "") {
+      setData(props);
+    } else {
+      const filteredData = props.filter((prop) => {
+        return (
+          prop.title.toLowerCase().includes(search.toLowerCase()) ||
+          prop.country.toLowerCase().includes(search.toLowerCase()) ||
+          prop.city.toLowerCase().includes(search.toLowerCase())
+        );
+      });
+      setData(filteredData);
+    }
+  }, [search, props]);
+
   return (
     <>
       <Navbar />
@@ -44,6 +61,8 @@ function Properties() {
               type="text"
               placeholder="Search by title/country/city..."
               className="flex-grow border-none outline-none text-lg"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
             <button className="bg-gradient-to-tl from-blue-900 to-blue-700 hover:bg-gradient-to-br text-white rounded-xl p-1">
               Search
@@ -53,7 +72,7 @@ function Properties() {
             <Spinner />
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 gap-x-7 my-5">
-              {props.map((prop) => (
+              {data.map((prop: any) => (
                 <Link
                   href={`/properties/${prop._id}`}
                   key={prop._id}
