@@ -105,7 +105,8 @@ export const AddProp = [
 
 
 export const linksUser = [
-  { title: "favourites", id: "/favourites" },
-  { title: "booking", id: "/booking" },
-  { title: "logout", id: "" },
+  { title: "Notification", id: "/notification", role: ["admin"] },
+  { title: "Favourites", id: "/favourites", role: ["user", "admin"] },
+  { title: "Booking", id: "/booking", role: ["user", "admin"] },
+  { title: "Logout", id: "", role: ["user", "admin"] },
 ];

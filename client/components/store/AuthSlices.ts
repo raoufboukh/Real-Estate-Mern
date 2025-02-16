@@ -114,6 +114,38 @@ export const removeBooking = createAsyncThunk(
   }
 );
 
+export const approveRequest = createAsyncThunk(
+  "auth/approve",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`/approveProperty/${id}`);
+      toast.success("Property added successfully");
+      return response.data;
+    } catch (error) {
+      const errorMessage =
+        (error as any).response?.data?.message || "An error occurred";
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage);
+    }
+  }
+);
+
+export const rejectRequest = createAsyncThunk(
+  "auth/reject",
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.put(`/rejectProperty/${id}`);
+      toast.error("Property Rejected");
+      return response.data;
+    } catch (error) {
+      const errorMessage =
+        (error as any).response?.data?.message || "An error occurred";
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage);
+    }
+  }
+);
+
 export const logout = createAsyncThunk(
   "auth/logout",
   async (_, { rejectWithValue }) => {
@@ -133,7 +165,7 @@ export const logout = createAsyncThunk(
 export interface User {
   _id: string;
   email: string;
-  notification: [string | number];
+  notification: [any];
   role: string;
   favourites: [any];
   booking: [any];
@@ -202,25 +234,51 @@ export const AuthSlice = createSlice({
       .addCase(removeFavorite.pending, (state) => {
         state.isChecking = true;
       })
-      .addCase(removeFavorite.fulfilled, (state,action) => {
+      .addCase(removeFavorite.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isChecking = false;
       })
       .addCase(removeFavorite.rejected, (state) => {
         state.isChecking = false;
-      }).addCase(addBooking.pending, (state) => {
+      })
+      .addCase(addBooking.pending, (state) => {
         state.isChecking = true;
-      }).addCase(addBooking.fulfilled, (state, action) => {
+      })
+      .addCase(addBooking.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isChecking = false;
-      }).addCase(addBooking.rejected, (state) => {
+      })
+      .addCase(addBooking.rejected, (state) => {
         state.isChecking = false;
-      }).addCase(removeBooking.pending, (state) => {
+      })
+      .addCase(removeBooking.pending, (state) => {
         state.isChecking = true;
-      }).addCase(removeBooking.fulfilled, (state, action) => {
+      })
+      .addCase(removeBooking.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isChecking = false;
-      }).addCase(removeBooking.rejected, (state) => {
+      })
+      .addCase(removeBooking.rejected, (state) => {
+        state.isChecking = false;
+      })
+      .addCase(approveRequest.pending, (state) => {
+        state.isChecking = true;
+      })
+      .addCase(approveRequest.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isChecking = false;
+      })
+      .addCase(approveRequest.rejected, (state) => {
+        state.isChecking = false;
+      })
+      .addCase(rejectRequest.pending, (state) => {
+        state.isChecking = true;
+      })
+      .addCase(rejectRequest.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isChecking = false;
+      })
+      .addCase(rejectRequest.rejected, (state) => {
         state.isChecking = false;
       })
       .addCase(logout.pending, (state) => {

@@ -35,7 +35,7 @@ export const addProps = createAsyncThunk(
   async (data: any, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post("/add-properties", data);
-      toast.success("Property added successfully");
+      toast.success("Request added successfully");
       return response.data;
     } catch (error) {
       return rejectWithValue(error);
