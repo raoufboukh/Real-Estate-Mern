@@ -196,8 +196,7 @@ const Add = () => {
       <div className="w-[90%] py-3 p-1 md:p-10 bg-white">
         <ul className="flex justify-center md:justify-between items-center flex-wrap gap-8">
           {AddProp.map((prop, index) => (
-            <div key={index} className="basis-[113px]">
-              <li className="flex items-center gap-2">
+              <li key={index} onClick={() => setCount(index)} className="flex items-center gap-2 basis-[113px] cursor-pointer">
                 {count > index ? (
                   <FaCheckCircle className="text-sky-600 size-10" />
                 ) : (
@@ -214,7 +213,6 @@ const Add = () => {
                   <span className="text-gray-600">{prop.description}</span>
                 </p>
               </li>
-            </div>
           ))}
         </ul>
         <div className="mt-16">{inputs[count]}</div>
