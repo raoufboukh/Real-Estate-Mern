@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@cloudinary/url-gen": "^1.21.0",
     "@reduxjs/toolkit": "^2.5.1",
     "@types/react-datepicker": "^6.2.0",
     "aos": "^2.3.4",
