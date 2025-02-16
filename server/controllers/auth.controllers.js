@@ -74,11 +74,8 @@ export const signIn = async (req, res) => {
 export const approve = async (req, res) => {
   try {
     const { id } = req.params;
-    // console.log(req.user);
-    // const { property } = req.user.notification.;
     const user = await User.findOne({ "notification._id": id });
     const property = user.notification.find((n) => n._id == id).property;
-    // console.log(property);
     const prop = new Property(property);
     await prop.save();
 
@@ -89,7 +86,6 @@ export const approve = async (req, res) => {
     res.status(200).json({ message: "Property Approved" });
   } catch (error) {
     res.status(500).json({ message: error.message });
-    // console.log(error);
   }
 };
 
