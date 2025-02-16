@@ -8,6 +8,18 @@ const bookingSchema = new mongoose.Schema({
   date: { type: Date, required: true },
 });
 
+const NotificationSchema = new mongoose.Schema({
+  message: {
+    type: String,
+  },
+  property: {
+    type: Object,
+  },
+  userId: {
+    type: String,
+  },
+});
+
 const user = new mongoose.Schema(
   {
     email: {
@@ -24,7 +36,7 @@ const user = new mongoose.Schema(
       default: "user",
     },
     notification: {
-      type: Array,
+      type: [NotificationSchema],
       default: [],
     },
     favourites: {

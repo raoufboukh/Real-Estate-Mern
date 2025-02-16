@@ -1,6 +1,6 @@
 import cloudinary from "../lib/cloudinary.js";
+import { User } from "../models/model.auth.js";
 import { Property } from "../models/properties.model.js";
-
 
 export const getProperties = async (req, res) => {
   try {
@@ -37,9 +37,8 @@ export const addProperty = async (req, res) => {
       parkings,
       bathrooms,
     } = req.body;
-    // console.log(req.body);
     const upload = await cloudinary.uploader.upload(image);
-    const property = new Property({
+    const property = {
       country,
       city,
       address,
@@ -50,10 +49,25 @@ export const addProperty = async (req, res) => {
       bedrooms,
       parkings,
       bathrooms,
+    };
+    const admins = await User.find({ role: "admin" });
+    if (!admins) {
+      const newProp = new Property(property);
+      await newProp.save();
+      return res.status(201).json(newProp);
+    }
+    const notification = {
+      message: "New Property Request",
+      property,
+    };
+    admins.forEach(async (admin) => {
+      await User.findByIdAndUpdate(admin._id, {
+        $push: { notification: notification },
+      });
     });
-    // console.log(property);
-    await property.save();
-    res.status(200).json(property);
+    res.status(200).json({ message: "Property Request Sent To admins" });
+    // await property.save();
+    // res.status(200).json(property);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });

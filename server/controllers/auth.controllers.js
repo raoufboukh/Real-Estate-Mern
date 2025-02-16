@@ -1,7 +1,7 @@
 import { generateToken } from "../lib/utils.js";
 import { User } from "../models/model.auth.js";
 import bcrypt from "bcrypt";
-import cloudinary from "../lib/cloudinary.js";
+import { Property } from "../models/properties.model.js";
 
 export const signUp = async (req, res) => {
   try {
@@ -66,6 +66,41 @@ export const signIn = async (req, res) => {
     } else {
       res.status(400).json({ message: "Invalid password" });
     }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const approve = async (req, res) => {
+  try {
+    const { id } = req.params;
+    // console.log(req.user);
+    // const { property } = req.user.notification.;
+    const user = await User.findOne({ "notification._id": id });
+    const property = user.notification.find((n) => n._id == id).property;
+    // console.log(property);
+    const prop = new Property(property);
+    await prop.save();
+
+    await User.updateMany(
+      { "notification._id": id },
+      { $pull: { notification: { _id: id } } }
+    );
+    res.status(200).json({ message: "Property Approved" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    // console.log(error);
+  }
+};
+
+export const reject = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await User.updateMany(
+      { "notification._id": id },
+      { $pull: { notification: { _id: id } } }
+    );
+    res.status(200).json({ message: "Property Rejected" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
